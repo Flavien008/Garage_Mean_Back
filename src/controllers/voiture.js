@@ -1,14 +1,9 @@
 const { ObjectID } = require("bson");
 const client = require("../db/connect");
-const { Voiture } = require("../models/voiture");
 
 const ajouterVoiture = async (req, res) => {
   try {
-    let voiture = new Voiture(
-      req.body.immatriculation,
-      req.body.modele,
-      req.body.idclient
-    );
+    let voiture = req.body
     let result = await client
       .db()
       .collection("voitures")

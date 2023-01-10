@@ -1,14 +1,9 @@
 const { ObjectID } = require("bson");
 const client = require("../db/connect");
-const { Utilisateur } = require("../models/utilisateur");
 
 const ajouterUtilisateur = async (req, res) => {
     try {
-        let utilisateur = new Utilisateur(
-        req.body.noms,
-        req.body.adresse,
-        req.body.telephone
-        );
+        let utilisateur = req.body
         let result = await client
         .db()
         .collection("utilisateurs")
