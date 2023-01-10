@@ -1,7 +1,7 @@
 const express = require("express");
-const { connect } = require("./db/connect");
-const routerUtilisateurs = require("./routers/utilisateur");
-const routerVoitures = require("./routers/voiture");
+const { connect } = require("./src/db/connect");
+const routerUtilisateurs = require("./src/routers/utilisateur");
+const routerVoitures = require("./src/routers/voiture");
 
 const app = express();
 
