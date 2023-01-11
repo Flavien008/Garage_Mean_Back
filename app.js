@@ -11,7 +11,7 @@ app.use(express.json());
 app.use("/api/v1", routerUtilisateurs);
 app.use("/api/v1", routerVoitures);
 
-connect("mongodb://127.0.0.1:27017/garage", (err) => {
+connect("mongodb://127.0.0.1:27017/", (err) => {
   if (err) {
     console.log("Erreur lors de la connexion à la base de données");
     process.exit(-1);

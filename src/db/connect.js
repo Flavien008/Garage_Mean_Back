@@ -20,7 +20,7 @@ function connect(url, callback) {
 }
 
 function db() {
-  var db = new Db(client, "dbOK");
+  var db = new Db(client, "garage_mean");
   return db;
 }
 

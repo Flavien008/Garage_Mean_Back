@@ -3,18 +3,33 @@ const client = require("../db/connect");
 
 const ajouterVoiture = async (req, res) => {
   try {
-    let voiture = req.body
+    let id_utilisateur = ObjectID(req.body.id_utilisateur);
+    var type = req.body.type
+    var modele = req.body.modele
+    var matriculation = req.body.matriculation
+    var img = req.body.img
+
+    const filter = { _id: id_utilisateur };
+    // this option instructs the method to create a document if no documents match the filter
+    const options = { upsert: false };
+    // create a document that sets the plot of the movie
+    const updateDoc = {
+      $push: { "voiture": {"_id": new ObjectID(),"type":type,"modele":modele,"matriculation":matriculation,"image":img} }
+      ,
+    };
+
     let result = await client
       .db()
-      .collection("voitures")
-      .insertOne(voiture);
+      .collection("utilisateurs")
+      .updateOne(filter,updateDoc,options);
 
     res.status(200).json(result);
   } catch (error) {
     console.log(error);
     res.status(501).json(error);
-  }
+  } 
 };
+
 
 const getVoitures = async (req, res) => {
   try {
@@ -97,5 +112,5 @@ module.exports = {
   getVoitures,
   getVoiture,
   updateVoiture,
-  deleteVoiture,
+  deleteVoiture
 };
