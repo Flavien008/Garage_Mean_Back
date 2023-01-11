@@ -1,17 +1,10 @@
-const express = require("express");
-const {
-  ajouterUtilisateur,
-  getUtilisateurs,
-  getUtilisateur,
-  updateUtilisateur,
-  deleteUtilisateur,
-} = require("../controllers/utilisateur");
+const express = require('express');
+const auth = require('../middleware/auth');
 const router = express.Router();
 
-router.route("/utilisateurs").post(ajouterUtilisateur);
-router.route("/utilisateurs").get(getUtilisateurs);
-router.route("/utilisateurs/:id").get(getUtilisateur);
-router.route("/utilisateurs/:id").put(updateUtilisateur);
-router.route("/utilisateurs/:id").delete(deleteUtilisateur);
+const utilisateurCtrl = require('../controllers/utilisateur');
+
+router.post('/signup', utilisateurCtrl.signup);
+router.post('/login', utilisateurCtrl.login);
 
 module.exports = router;

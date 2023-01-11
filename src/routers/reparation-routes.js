@@ -4,6 +4,6 @@ const {
 } = require("../controllers/reparation");
 const router = express.Router();
 
-router.route("/reparation/details").post(ajouterDetails);
+router.route("/reparation/details").post(auth,ajouterDetails);
 
 module.exports = router;
