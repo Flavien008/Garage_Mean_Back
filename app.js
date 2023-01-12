@@ -2,6 +2,9 @@ const express = require("express");
 const { connect } = require("./src/db/connect");
 const routerUtilisateurs = require("./src/routers/utilisateur-routes");
 const routerVoitures = require("./src/routers/voiture-routes");
+const routerObject = require("./src/routers/object-routes");
+const routerReparation = require("./src/routers/reparation-routes");
+
 
 const app = express();
 
@@ -10,6 +13,9 @@ app.use(express.json());
 
 app.use("/api/v1", routerUtilisateurs);
 app.use("/api/v1", routerVoitures);
+app.use("/api/v1", routerObject);
+app.use("/api/v1", routerReparation);
+
 
 connect("mongodb://127.0.0.1:27017/", (err) => {
   if (err) {
