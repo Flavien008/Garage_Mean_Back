@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt');
-const Utilisateur = require("../model/utilisateur");
 const client = require("../db/connect");
 const jwt = require('jsonwebtoken');
 
@@ -8,15 +7,11 @@ exports.signup = async (req, res, next) => {
     try {
         bcrypt.hash(req.body.password,1)
           .then(async hash => {
-            const utilisateur = new Utilisateur({
-              email: req.body.email,
-              password: hash
-            });
-            console.log(utilisateur);
+            req.body.password = hash
             let result = await client
           .db()
           .collection("utilisateurs")
-          .insertOne(utilisateur);
+          .insertOne(req.body);
           res.status(200).json(result);
           })
       } catch (error) {
@@ -27,7 +22,7 @@ exports.signup = async (req, res, next) => {
 
   exports.login = async (req, res, next) => {
     try {
-      let cursor = client.db().collection("utilisateurs").find({ email: req.body.email });
+      let cursor = client.db().collection("utilisateurs").find({ login: req.body.login });
       let result = await cursor.toArray();
       if (result.length > 0) {
         bcrypt.compare(req.body.password, result[0].password)
