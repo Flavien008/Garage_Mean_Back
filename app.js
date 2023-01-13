@@ -8,12 +8,7 @@ const config = require('config');
 
 var cors = require('cors');
 
-var corsOptions = {
-  "origin": "*",
-  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-  "preflightContinue": false,
-  "optionsSuccessStatus": 204
-}
+var corsOptions = config.get('corsOptions');
 
 const app = express();
 app.use(cors(corsOptions));
