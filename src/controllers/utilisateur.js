@@ -34,6 +34,8 @@ exports.signup = async (req, res, next) => {
                       console.log("metyyyyy")
                        res.status(200).json({
                         userId: result[0]._id,
+                        nom: result[0].nom,
+                        role : result[0].role,
                         token: jwt.sign(
                           { userId: result[0]._id },
                           'RANDOM_TOKEN_SECRET',
