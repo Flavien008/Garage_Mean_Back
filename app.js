@@ -4,9 +4,17 @@ const routerUtilisateurs = require("./src/routers/utilisateur-routes");
 const routerVoitures = require("./src/routers/voiture-routes");
 const routerObject = require("./src/routers/object-routes");
 const routerReparation = require("./src/routers/reparation-routes");
+var cors = require('cors');
 
+var corsOptions = {
+  "origin": "*",
+  "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+  "preflightContinue": false,
+  "optionsSuccessStatus": 204
+}
 
 const app = express();
+app.use(cors(corsOptions));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
