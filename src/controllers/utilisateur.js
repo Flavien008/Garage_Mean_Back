@@ -6,7 +6,6 @@ const { ObjectID } = require("bson");
 
 exports.getUser = async (req, res) => {
   try {
-    console.log('dzdea');
     let id = new ObjectID(req.params.id);
     let cursor = client.db().collection("utilisateurs").find({ _id: id });
     let result = await cursor.toArray();
