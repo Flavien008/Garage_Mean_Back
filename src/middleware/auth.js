@@ -11,8 +11,7 @@ module.exports = (req, res, next) => {
        };
 	next();
    } catch(error) {
-       res.status(401).json({  message: 'Failed to fetch!!'  });
+       res.status(401).json({  message: 'Token invalid or expired!'  });
        console.log(error);
-       console.log("atoooo")
    }
 };

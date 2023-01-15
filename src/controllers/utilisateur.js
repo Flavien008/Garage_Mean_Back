@@ -1,6 +1,25 @@
 const bcrypt = require('bcrypt');
 const client = require("../db/connect");
 const jwt = require('jsonwebtoken');
+const { ObjectID } = require("bson");
+
+
+exports.getUser = async (req, res) => {
+  try {
+    console.log('dzdea');
+    let id = new ObjectID(req.params.id);
+    let cursor = client.db().collection("utilisateurs").find({ _id: id });
+    let result = await cursor.toArray();
+    if (result.length > 0) {
+      res.status(200).json(result[0]);
+    } else {
+      res.status(204).json({ msg: "Cet utilisateur n'existe pas" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(501).json(error);
+  }
+};
 
 
 exports.signup = async (req, res, next) => {
