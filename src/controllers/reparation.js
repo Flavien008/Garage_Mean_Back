@@ -26,14 +26,12 @@ const ajouterDetails = async (req, res) => {
     } 
 };
 
-    const findReparation= async (req, res) => {
+    const getReparationVoiture= async (req, res) => {
         try {
-            var search = '';
-            if(req.body.search) search = req.body.search;
-            // console.log(search);
+            var id = req.params.id;
+            console.log('fory'+id);
             const collection = client.db().collection("reparation");
-            collection.find({ $or: [{designation:{'$regex' : search, '$options' : 'i'}},
-            {matriculation:{'$regex' : search, '$options' : 'i'} }] }).toArray((_err, docs) => {
+            collection.find({idvoiture : id }).toArray((_err, docs) => {
                 console.log(docs);
                 res.status(200).json(docs);
             });
@@ -48,5 +46,5 @@ const ajouterDetails = async (req, res) => {
 
 module.exports = {
   ajouterDetails,
-  findReparation
+  getReparationVoiture
 };
