@@ -5,6 +5,7 @@ const addObject = async (req, res) => {
     try {
         let objet = req.body
         let tablename = req.body.tablename
+        delete req.body.tablename
 
         let result = await client
         .db()
