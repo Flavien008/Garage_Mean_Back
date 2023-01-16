@@ -4,6 +4,7 @@ const routerUtilisateurs = require("./src/routers/utilisateur-routes");
 const routerVoitures = require("./src/routers/voiture-routes");
 const routerObject = require("./src/routers/object-routes");
 const routerReparation = require("./src/routers/reparation-routes");
+const bodyParser = require('body-parser');
 const config = require('config');
 
 var cors = require('cors');
@@ -11,10 +12,14 @@ var cors = require('cors');
 var corsOptions = config.get('corsOptions');
 
 const app = express();
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
 app.use(cors(corsOptions));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
 
 app.use("/api/v1", routerUtilisateurs);
 app.use("/api/v1", routerVoitures);
