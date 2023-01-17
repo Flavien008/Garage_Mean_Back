@@ -26,6 +26,7 @@ exports.signup = async (req, res, next) => {
         bcrypt.hash(req.body.password,1)
           .then(async hash => {
             req.body.password = hash
+            req.body.role='client'
             let result = await client
           .db()
           .collection("utilisateurs")
