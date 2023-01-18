@@ -29,9 +29,8 @@ const ajouterDetails = async (req, res) => {
     const getReparationVoiture= async (req, res) => {
         try {
             var id = req.params.id;
-            console.log('fory'+id);
             const collection = client.db().collection("reparation");
-            collection.find({idvoiture : id }).toArray((_err, docs) => {
+            collection.find({idvoiture : id }).sort({"date_depot": -1}).toArray((_err, docs) => {
                 console.log(docs);
                 res.status(200).json(docs);
             });
