@@ -41,9 +41,26 @@ const ajouterDetails = async (req, res) => {
         } 
     };
 
+    const findReparation= async (req, res) => {
+        try {
+            let id = new ObjectID(req.params.id);
+            let cursor = client.db().collection("reparation").find({ _id: id });
+            let result = await cursor.toArray();
+            if (result.length > 0) {
+              res.status(200).json(result[0]);
+            } else {
+              res.status(204).json({ msg: "Cet reparation n'existe pas" });
+            }
+          } catch (error) {
+            console.log(error);
+            res.status(501).json(error);
+          }
+    };
+
 
 
 module.exports = {
   ajouterDetails,
-  getReparationVoiture
+  getReparationVoiture,
+  findReparation
 };
