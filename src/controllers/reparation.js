@@ -41,6 +41,21 @@ const ajouterDetails = async (req, res) => {
         } 
     };
 
+     const getReparationVoitureByEtat= async (req, res) => {
+        try {
+            var etat = req.params.etat;
+            const collection = client.db().collection("reparation");
+            collection.find({etat : etat }).sort({"date_depot": -1}).toArray((_err, docs) => {
+                console.log(docs);
+                res.status(200).json(docs);
+            });
+
+        } catch (error) {
+            console.log(error);
+            res.status(501).json(error);
+        } 
+    };
+
     const findReparation= async (req, res) => {
         try {
             let id = new ObjectID(req.params.id);
@@ -62,5 +77,6 @@ const ajouterDetails = async (req, res) => {
 module.exports = {
   ajouterDetails,
   getReparationVoiture,
-  findReparation
+  findReparation,
+  getReparationVoitureByEtat
 };
