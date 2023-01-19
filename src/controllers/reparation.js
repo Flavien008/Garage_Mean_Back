@@ -72,11 +72,32 @@ const ajouterDetails = async (req, res) => {
           }
     };
 
+    const updateEtat = async (req, res) => {
+      try {
+        let id = new ObjectID(req.params.id);
+        let etat = req.body.etat;
+        console.log(etat);
+        let result = await client
+          .db()
+          .collection("reparation")
+          .updateOne({ _id: id }, { $set: { etat : etat } });
+    
+        if (result.modifiedCount === 1) {
+          res.status(200).json({ msg: "Modification réussie" });
+        } else {
+          res.status(404).json({ msg: "Cet reparation n'existe pas" });
+        }
+      } catch (error) {
+        console.log(error);
+        res.status(501).json(error);
+      }
+    };
 
 
 module.exports = {
   ajouterDetails,
   getReparationVoiture,
   findReparation,
-  getReparationVoitureByEtat
+  getReparationVoitureByEtat,
+  updateEtat,
 };
