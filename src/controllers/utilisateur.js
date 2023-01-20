@@ -25,9 +25,9 @@ exports.signup = async (req, res, next) => {
     try {
         bcrypt.hash(req.body.password,1)
           .then(async hash => {
-            req.body.password = hash
-            req.body.role='client'
-            let result = await client
+                req.body.password = hash
+                if(req.body.role==null) req.body.role='client'
+                let result = await client
           .db()
           .collection("utilisateurs")
           .insertOne(req.body);
