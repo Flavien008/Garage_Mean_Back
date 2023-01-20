@@ -1,23 +1,41 @@
 const express = require("express");
 const { connect } = require("./src/db/connect");
-const routerUtilisateurs = require("./src/routers/utilisateur");
-const routerVoitures = require("./src/routers/voiture");
+const routerUtilisateurs = require("./src/routers/utilisateur-routes");
+const routerVoitures = require("./src/routers/voiture-routes");
+const routerObject = require("./src/routers/object-routes");
+const routerReparation = require("./src/routers/reparation-routes");
+const bodyParser = require('body-parser');
+const config = require('config');
+
+var cors = require('cors');
+
+var corsOptions = config.get('corsOptions');
 
 const app = express();
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+
+app.use(cors(corsOptions));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+
 app.use("/api/v1", routerUtilisateurs);
 app.use("/api/v1", routerVoitures);
+app.use("/api/v1", routerObject);
+app.use("/api/v1", routerReparation);
 
-connect("mongodb://127.0.0.1:27017/garage", (err) => {
+const port = config.get('port');
+const dbUrl = config.get('database.url');
+
+connect(dbUrl, (err) => {
   if (err) {
     console.log("Erreur lors de la connexion à la base de données");
     process.exit(-1);
   } else {
     console.log("Connexion avec la base de données établie");
-    app.listen(3000);
-    console.log("Attente des requêtes au port 3OOO");
+    app.listen(port);
+    console.log("Attente des requêtes au port "+port);
   }
 }); 

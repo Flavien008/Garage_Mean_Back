@@ -1,6 +1,8 @@
 const { MongoClient, Db } = require("mongodb");
+const config = require('config');
 
 let client = null;
+const dbName = config.get('database.name');
 
 function connect(url, callback) {
   if (client === null) {
@@ -20,7 +22,7 @@ function connect(url, callback) {
 }
 
 function db() {
-  var db = new Db(client, "dbOK");
+  var db = new Db(client, dbName);
   return db;
 }
 
