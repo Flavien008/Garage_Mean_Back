@@ -55,6 +55,24 @@ const ajouterDetails = async (req, res) => {
             res.status(501).json(error);
         } 
     };
+    
+    const setPrix= async (req, res) => {
+        let id = new ObjectID(req.body.id);
+        let prix = req.body.prix;
+
+        let result = await client
+          .db()
+          .collection("reparation")
+          .updateOne({ _id: id }, { $set: { total : prix } });
+        
+          console.log('setPrix'+result);
+
+        if (result.modifiedCount === 1) {
+          res.status(200).json(result);
+        } else {
+          res.status(404).json(result);
+        }
+    };
 
     const findReparation= async (req, res) => {
         try {
@@ -100,4 +118,5 @@ module.exports = {
   findReparation,
   getReparationVoitureByEtat,
   updateEtat,
+  setPrix
 };
