@@ -4,6 +4,8 @@ const routerUtilisateurs = require("./src/routers/utilisateur-routes");
 const routerVoitures = require("./src/routers/voiture-routes");
 const routerObject = require("./src/routers/object-routes");
 const routerReparation = require("./src/routers/reparation-routes");
+const routerFacture = require("./src/routers/facture-routes");
+
 const bodyParser = require('body-parser');
 const config = require('config');
 
@@ -25,6 +27,7 @@ app.use("/api/v1", routerUtilisateurs);
 app.use("/api/v1", routerVoitures);
 app.use("/api/v1", routerObject);
 app.use("/api/v1", routerReparation);
+app.use("/api/v1", routerFacture);
 
 const port = config.get('port');
 const dbUrl = config.get('database.url');

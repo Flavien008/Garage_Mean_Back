@@ -74,6 +74,21 @@ const ajouterDetails = async (req, res) => {
         }
     };
 
+    const facturerEtat = async (req, res) => {
+      let id = new ObjectID(req.params.id);
+      let result = await client
+        .db()
+        .collection("reparation")
+        .updateOne({ _id: id }, { $set: { facturer : 1 } });
+      if (result.modifiedCount === 1) {
+        res.status(200).json(result);
+      }else if(result.matchedCount===1){
+        res.status(200).json('deja facturer');
+      } else {
+        res.status(404).json(result);
+      }
+  };
+
     const findReparation= async (req, res) => {
         try {
             let id = new ObjectID(req.params.id);
@@ -118,5 +133,6 @@ module.exports = {
   findReparation,
   getReparationVoitureByEtat,
   updateEtat,
-  setPrix
+  setPrix,
+  facturerEtat
 };
