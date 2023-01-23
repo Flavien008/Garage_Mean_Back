@@ -6,7 +6,7 @@ const {
 const router = express.Router();
 
 router.route("/facture/:id").get(auth,getFacture);
-router.route("/paiement").post(paiement);
+router.route("/paiement").post(auth,paiement);
 
 
 module.exports = router;

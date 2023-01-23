@@ -22,6 +22,7 @@ const paiement = async (req, res) => {
     var paiement = req.body.montant;
     var designation = req.body.designation;
     var date = req.body.date;
+    console.log(req.body);
     var reste ;
     const filter = { _id: id };
 
@@ -54,6 +55,15 @@ const paiement = async (req, res) => {
             res.status(401).json({ error: "Paiment superieur a la reste a payer." });
             return;
         }
+
+        const journal = client.db().collection("journal");
+        var dt = {
+            "designation": "paiement facture pour designation : "+designation,
+            "entree": paiement,
+            "sortie" : 0,
+            "date": date
+        } 
+        const data = await journal.insertOne(dt);
 
         const result = await collection.updateOne(filter, updateDoc, options);
         res.status(200).json(result);
