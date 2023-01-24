@@ -143,6 +143,27 @@ const ajouterDetails = async (req, res) => {
       }
     };
 
+    const updateAvancement = async (req, res) => {
+      try {
+        let id = new ObjectID(req.params.id);
+        let details = req.body.details;
+        console.log(details);
+        let result = await client
+          .db()
+          .collection("reparation")
+          .updateOne({ _id: id }, { $set: { details : details } });
+    
+        if (result.modifiedCount === 1) {
+          res.status(200).json({ msg: "Modification réussie" });
+        } else {
+          res.status(404).json({ msg: "Cet reparation n'existe pas" });
+        }
+      } catch (error) {
+        console.log(error);
+        res.status(501).json(error);
+      }
+    };
+
 
 module.exports = {
   ajouterDetails,
@@ -151,5 +172,6 @@ module.exports = {
   getReparationVoitureByEtat,
   updateEtat,
   setPrix,
-  facturerEtat
+  facturerEtat,
+  updateAvancement
 };

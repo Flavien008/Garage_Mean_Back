@@ -2,7 +2,7 @@ const express = require("express");
 const auth = require('../middleware/auth');
 
 const {
-  ajouterDetails, findReparation, getReparationVoiture ,facturerEtat, getReparationVoitureByEtat,updateEtat,setPrix
+  ajouterDetails, findReparation, getReparationVoiture ,facturerEtat, getReparationVoitureByEtat,updateEtat,setPrix,updateAvancement
 } = require("../controllers/reparation");
 const router = express.Router();
 
@@ -13,5 +13,6 @@ router.route("/reparationbyetat/:etat").get(auth,getReparationVoitureByEtat);
 router.route("/updateetat/:id").post(auth,updateEtat); 
 router.route("/reparation/prix").post(auth,setPrix);
 router.route("/reparation/facturer/:id").get(auth,facturerEtat);
+router.route("/reparation/avancer/:id").post(auth,updateAvancement);
 
 module.exports = router;
