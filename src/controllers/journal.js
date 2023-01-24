@@ -6,7 +6,7 @@ const getJournal = async (req, res) => {
         .db()
         .collection("journal")
         .find()
-        .sort({ date: 1 });
+        .sort({ date: -1 });
       let result = await cursor.toArray();
       if (result.length > 0) {
         res.status(200).json(result);
