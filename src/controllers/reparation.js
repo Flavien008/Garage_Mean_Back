@@ -56,23 +56,40 @@ const ajouterDetails = async (req, res) => {
         } 
     };
     
-    const setPrix= async (req, res) => {
-        let id = new ObjectID(req.body.id);
-        let prix = req.body.prix;
-
-        let result = await client
-          .db()
-          .collection("reparation")
-          .updateOne({ _id: id }, { $set: { total : prix } });
-        
-          console.log('setPrix'+result);
-
-        if (result.modifiedCount === 1) {
-          res.status(200).json(result);
-        } else {
-          res.status(404).json(result);
+    const setPrix = async (req, res) => {
+        try {
+            let id = new ObjectID(req.body.id);
+            var prix = 0;
+            const filter = { _id: id };
+    
+            const collection = client.db().collection("reparation");
+            const docs = await collection.find(filter).toArray();
+    
+            if (!docs.length) {
+                throw new Error("reparation introuvable.");
+            }
+    
+            for( var i = 0 ; i < docs[0].details.length ; i++){
+                prix += Number(docs[0].details[i].prix);
+            }
+    
+            console.log('vidiny'+prix);
+    
+            let result = await client
+              .db()
+              .collection("reparation")
+              .updateOne({ _id: id }, { $set: { total : prix } });
+            
+            if (result.modifiedCount === 1) {
+              res.status(200).json(result);
+            } else {
+              throw new Error("Erreur lors de la mise à jour du prix.");
+            }
+        } catch (err) {
+            res.status(404).json({ error: err.message });
         }
     };
+    
 
     const facturerEtat = async (req, res) => {
       let id = new ObjectID(req.params.id);
