@@ -55,6 +55,7 @@ exports.signup = async (req, res, next) => {
                         userId: result[0]._id,
                         nom: result[0].nom,
                         role : result[0].role,
+                        mail : result[0].email,
                         token: jwt.sign(
                           { userId: result[0]._id },
                           'RANDOM_TOKEN_SECRET',
