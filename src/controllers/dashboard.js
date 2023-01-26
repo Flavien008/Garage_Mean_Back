@@ -13,7 +13,7 @@ const benefice= async (req, res) => {
         var condition;
 
         console.log(startDate);
-        if(startDate != endDate) condition= {$gte: new Date(startDate),$lt: new Date(endDate)}
+        if(startDate != endDate) condition= {$gte: new Date(startDate),$lte: new Date(endDate)}
         if(startDate == endDate) condition= {$eq: new Date(startDate)}
 
         console.log(condition);
