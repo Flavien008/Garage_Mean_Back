@@ -187,11 +187,11 @@ const ajouterDetails = async (req, res) => {
     const updatedatefin = async (req, res) => {
       try {
         let id = new ObjectID(req.params.id);
-        let datedebutreparation = req.body.datedebutreparation;
+        let dateterminaison = req.body.dateterminaison;
         let result = await client
           .db()
           .collection("reparation")
-          .updateOne({ _id: id }, { $set: { datedebutreparation : datedebutreparation} });
+          .updateOne({ _id: id }, { $set: { dateterminaison : dateterminaison} }); 
     
         if (result.modifiedCount === 1) {
           res.status(200).json({ msg: "Modification réussie" });
@@ -214,5 +214,6 @@ module.exports = {
   setPrix,
   facturerEtat,
   updateAvancement,
-  updatedatedebut
+  updatedatedebut,
+  updatedatefin
 };
