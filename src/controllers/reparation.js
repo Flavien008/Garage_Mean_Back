@@ -164,6 +164,46 @@ const ajouterDetails = async (req, res) => {
       }
     };
 
+    const updatedatedebut = async (req, res) => {
+      try {
+        let id = new ObjectID(req.params.id);
+        let datedebutreparation = req.body.datedebutreparation;
+        let result = await client
+          .db()
+          .collection("reparation")
+          .updateOne({ _id: id }, { $set: { datedebutreparation : datedebutreparation} });
+    
+        if (result.modifiedCount === 1) {
+          res.status(200).json({ msg: "Modification réussie" });
+        } else {
+          res.status(404).json({ msg: "Cet reparation n'existe pas" });
+        }
+      } catch (error) {
+        console.log(error);
+        res.status(501).json(error);
+      }
+    };
+
+    const updatedatefin = async (req, res) => {
+      try {
+        let id = new ObjectID(req.params.id);
+        let datedebutreparation = req.body.datedebutreparation;
+        let result = await client
+          .db()
+          .collection("reparation")
+          .updateOne({ _id: id }, { $set: { datedebutreparation : datedebutreparation} });
+    
+        if (result.modifiedCount === 1) {
+          res.status(200).json({ msg: "Modification réussie" });
+        } else {
+          res.status(404).json({ msg: "Cet reparation n'existe pas" });
+        }
+      } catch (error) {
+        console.log(error);
+        res.status(501).json(error);
+      }
+    };
+
 
 module.exports = {
   ajouterDetails,
@@ -173,5 +213,6 @@ module.exports = {
   updateEtat,
   setPrix,
   facturerEtat,
-  updateAvancement
+  updateAvancement,
+  updatedatedebut
 };
