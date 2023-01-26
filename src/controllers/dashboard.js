@@ -5,17 +5,13 @@ const benefice= async (req, res) => {
     try {
         const data= req.body;
         console.log(data);
-        const startDate = new Date(data.debut).toISOString().slice(0, 10);
-        const endDate = new Date(data.fin).toISOString().slice(0, 10);
-        var benefice = 0 ;
+        const startDate = new Date(new Date(data.debut).toISOString().slice(0, 10));
+        const endDate = new Date(new Date(data.fin).toISOString().slice(0, 10));
         var entree = 0;
         var sortie = 0;
         var condition;
 
-        console.log(startDate);
-        if(startDate != endDate) condition= {$gte: new Date(startDate),$lte: new Date(endDate)}
-        if(startDate == endDate) condition= {$eq: new Date(startDate)}
-
+        if(startDate != endDate) condition= {$gte:startDate,$lte:endDate}
         console.log(condition);
 
         const collection = client.db().collection("journal");
