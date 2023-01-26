@@ -21,7 +21,7 @@ const paiement = async (req, res) => {
     var id = ObjectID(req.body.id);
     var paiement = req.body.montant;
     var designation = req.body.designation;
-    var date = req.body.date;
+    var date = new Date(req.body.date);
     console.log(req.body);
     var reste ;
     const filter = { _id: id };
