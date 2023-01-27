@@ -1,4 +1,5 @@
 const { ObjectID } = require("bson");
+const moment = require('moment');
 const client = require("../db/connect");
 
 const benefice = async (req, res) => {
@@ -78,8 +79,34 @@ const statistique = async (req, res) => {
     } 
 };
 
+const getMoyenneReparationVoiture= async (req, res) => {
+    try {
+        var etat = req.params.etat;
+        const collection = client.db().collection("reparation");
+        collection.find({etat : "terminé" }).sort({"date_depot": -1}).toArray((_err, docs) => {
+            console.log(docs);
+            var temps = 0;
+            for (let i = 0; i < docs.length; i++) {
+                const datedebut = moment(docs[i].datedebutreparation, "DD/MM/YYYY HH:mm:ss");
+                const datefin = moment(docs[i].dateterminaison, "DD/MM/YYYY HH:mm:ss");
+                console.log(new Date(datedebut));
+                console.log(datefin);
+                temps = temps + datefin - datedebut;
+              }
+            moyenne = temps/docs.length;
+            const reparationmoyenne = moment.duration(moyenne)._data.hours + "h " +moment.duration(moyenne)._data.minutes + "mn " + moment.duration(moyenne)._data.seconds +"sec";
+            res.status(200).json({"reparationmoyenne" :reparationmoyenne});
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(501).json(error);
+    } 
+};
+
 
 module.exports = {
     benefice,
-    statistique
+    statistique,
+    getMoyenneReparationVoiture
  };
