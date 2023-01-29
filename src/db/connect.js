@@ -2,7 +2,7 @@ const { MongoClient, Db } = require("mongodb");
 const config = require('config');
 
 let client = null;
-const dbName = config.get('database.name');
+const dbName = config.get('garage_mean');
 
 function connect(url, callback) {
   if (client === null) {
