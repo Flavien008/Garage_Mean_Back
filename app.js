@@ -37,8 +37,8 @@ app.use("/api/v1", routerJournal);
 app.use("/api/v1", routerMail);
 app.use("/api/v1", routerDashboard);
 
-const port = 3000;
-const dbUrl = 'mongodb+srv://mean:mean1234@cluster0.tstxgfw.mongodb.net/?retryWrites=true&w=majority';
+const port = config.get('port');
+const dbUrl = config.get('database.url');
 
 connect(dbUrl, (err) => {
   if (err) {
