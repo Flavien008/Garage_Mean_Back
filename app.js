@@ -12,7 +12,7 @@ const routerDashboard = require("./src/routers/dashboard-routes");
 
 
 const bodyParser = require('body-parser');
-const config = require('config');
+// const config = require('config');
 
 var cors = require('cors');
 
@@ -22,7 +22,7 @@ const app = express();
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
