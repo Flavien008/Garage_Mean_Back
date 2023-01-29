@@ -4,6 +4,13 @@ const routerUtilisateurs = require("./src/routers/utilisateur-routes");
 const routerVoitures = require("./src/routers/voiture-routes");
 const routerObject = require("./src/routers/object-routes");
 const routerReparation = require("./src/routers/reparation-routes");
+const routerFacture = require("./src/routers/facture-routes");
+const routerJournal = require("./src/routers/journal-routes");
+const routerMail = require("./src/routers/mail-routes");
+const routerDashboard = require("./src/routers/dashboard-routes");
+
+
+
 const bodyParser = require('body-parser');
 const config = require('config');
 
@@ -25,6 +32,10 @@ app.use("/api/v1", routerUtilisateurs);
 app.use("/api/v1", routerVoitures);
 app.use("/api/v1", routerObject);
 app.use("/api/v1", routerReparation);
+app.use("/api/v1", routerFacture);
+app.use("/api/v1", routerJournal);
+app.use("/api/v1", routerMail);
+app.use("/api/v1", routerDashboard);
 
 const port = config.get('port');
 const dbUrl = config.get('database.url');

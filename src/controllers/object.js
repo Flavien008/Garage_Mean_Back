@@ -5,6 +5,8 @@ const addObject = async (req, res) => {
     try {
         let objet = req.body
         let tablename = req.body.tablename
+        if(tablename=='journal') req.body.date = new Date(req.body.date);
+
         delete req.body.tablename
 
         let result = await client

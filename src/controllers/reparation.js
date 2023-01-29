@@ -55,6 +55,56 @@ const ajouterDetails = async (req, res) => {
             res.status(501).json(error);
         } 
     };
+    
+    const setPrix = async (req, res) => {
+        try {
+            let id = new ObjectID(req.body.id);
+            var prix = 0;
+            const filter = { _id: id };
+    
+            const collection = client.db().collection("reparation");
+            const docs = await collection.find(filter).toArray();
+    
+            if (!docs.length) {
+                throw new Error("reparation introuvable.");
+            }
+    
+            for( var i = 0 ; i < docs[0].details.length ; i++){
+                prix += Number(docs[0].details[i].prix);
+            }
+    
+            console.log('vidiny'+prix);
+    
+            let result = await client
+              .db()
+              .collection("reparation")
+              .updateOne({ _id: id }, { $set: { total : prix } });
+            
+            if (result.modifiedCount === 1) {
+              res.status(200).json(result);
+            } else {
+              throw new Error("Erreur lors de la mise à jour du prix.");
+            }
+        } catch (err) {
+            res.status(404).json({ error: err.message });
+        }
+    };
+    
+
+    const facturerEtat = async (req, res) => {
+      let id = new ObjectID(req.params.id);
+      let result = await client
+        .db()
+        .collection("reparation")
+        .updateOne({ _id: id }, { $set: { facturer : 1 } });
+      if (result.modifiedCount === 1) {
+        res.status(200).json(result);
+      }else if(result.matchedCount===1){
+        res.status(200).json('deja facturer');
+      } else {
+        res.status(404).json(result);
+      }
+  };
 
     const findReparation= async (req, res) => {
         try {
@@ -93,6 +143,67 @@ const ajouterDetails = async (req, res) => {
       }
     };
 
+    const updateAvancement = async (req, res) => {
+      try {
+        let id = new ObjectID(req.params.id);
+        let details = req.body.details;
+        console.log(details);
+        let result = await client
+          .db()
+          .collection("reparation")
+          .updateOne({ _id: id }, { $set: { details : details } });
+    
+        if (result.modifiedCount === 1) {
+          res.status(200).json({ msg: "Modification réussie" });
+        } else {
+          res.status(404).json({ msg: "Cet reparation n'existe pas" });
+        }
+      } catch (error) {
+        console.log(error);
+        res.status(501).json(error);
+      }
+    };
+
+    const updatedatedebut = async (req, res) => {
+      try {
+        let id = new ObjectID(req.params.id);
+        let datedebutreparation = req.body.datedebutreparation;
+        let result = await client
+          .db()
+          .collection("reparation")
+          .updateOne({ _id: id }, { $set: { datedebutreparation : datedebutreparation} });
+    
+        if (result.modifiedCount === 1) {
+          res.status(200).json({ msg: "Modification réussie" });
+        } else {
+          res.status(404).json({ msg: "Cet reparation n'existe pas" });
+        }
+      } catch (error) {
+        console.log(error);
+        res.status(501).json(error);
+      }
+    };
+
+    const updatedatefin = async (req, res) => {
+      try {
+        let id = new ObjectID(req.params.id);
+        let dateterminaison = req.body.dateterminaison;
+        let result = await client
+          .db()
+          .collection("reparation")
+          .updateOne({ _id: id }, { $set: { dateterminaison : dateterminaison} }); 
+    
+        if (result.modifiedCount === 1) {
+          res.status(200).json({ msg: "Modification réussie" });
+        } else {
+          res.status(404).json({ msg: "Cet reparation n'existe pas" });
+        }
+      } catch (error) {
+        console.log(error);
+        res.status(501).json(error);
+      }
+    };
+
 
 module.exports = {
   ajouterDetails,
@@ -100,4 +211,9 @@ module.exports = {
   findReparation,
   getReparationVoitureByEtat,
   updateEtat,
+  setPrix,
+  facturerEtat,
+  updateAvancement,
+  updatedatedebut,
+  updatedatefin
 };

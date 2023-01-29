@@ -35,7 +35,7 @@ const getVoitures = async (req, res) => {
   try {
     let cursor = client
       .db()
-      .collection("voitures")
+      .collection("utilisateurs")
       .find()
       .sort({ noms: 1 });
     let result = await cursor.toArray();
