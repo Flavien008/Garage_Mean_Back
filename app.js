@@ -12,17 +12,17 @@ const routerDashboard = require("./src/routers/dashboard-routes");
 
 
 const bodyParser = require('body-parser');
-// const config = require('config');
+const config = require('config');
 
 var cors = require('cors');
 
-// var corsOptions = config.get('corsOptions');
+var corsOptions = config.get('corsOptions');
 
 const app = express();
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
-app.use(cors());
+app.use(cors(corsOptions));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -37,8 +37,8 @@ app.use("/api/v1", routerJournal);
 app.use("/api/v1", routerMail);
 app.use("/api/v1", routerDashboard);
 
-const port = 3000;
-const dbUrl = 'mongodb+srv://mean:mean1234@cluster0.tstxgfw.mongodb.net/?retryWrites=true&w=majority';
+const port = config.get('port');
+const dbUrl = config.get('database.url');
 
 connect(dbUrl, (err) => {
   if (err) {
