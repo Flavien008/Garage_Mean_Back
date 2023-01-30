@@ -6,6 +6,7 @@ const addObject = async (req, res) => {
         let objet = req.body
         let tablename = req.body.tablename
         if(tablename=='journal') req.body.date = new Date(req.body.date);
+        if(tablename=='reparation') req.body.date_depot = new Date(req.body.date_depot);
 
         delete req.body.tablename
 

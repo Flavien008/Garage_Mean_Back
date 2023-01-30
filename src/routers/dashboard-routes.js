@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.route("/benefice").post(benefice);
 router.route("/statistic").post(statistique);
-router.route("/moyennevoiture").get(getMoyenneReparationVoiture);
+router.route("/moyennevoiture").post(getMoyenneReparationVoiture);
 
 
 
