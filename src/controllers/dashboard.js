@@ -81,8 +81,15 @@ const statistique = async (req, res) => {
 const getMoyenneReparationVoiture= async (req, res) => {
     try {
         var etat = req.params.etat;
+        startDate = req.body.startDate;
+        endDate = req.body.endDate;
+        console.log(startDate);
+        console.log(endDate);
         const collection = client.db().collection("reparation");
-        collection.find({etat : "terminé" }).sort({"date_depot": -1}).toArray((_err, docs) => {
+        collection.find({etat : "terminé",  date_depot: {
+            $gte: startDate,
+            $lt: endDate
+          } }).sort({"date_depot": -1}).toArray((_err, docs) => {
             console.log(docs);
             var temps = 0;
             for (let i = 0; i < docs.length; i++) {
