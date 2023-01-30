@@ -88,7 +88,7 @@ const getMoyenneReparationVoiture= async (req, res) => {
         const collection = client.db().collection("reparation");
         collection.find({etat : "terminé",  date_depot: {
             $gte: startDate,
-            $lt: endDate
+            $lte: endDate
           } }).sort({"date_depot": -1}).toArray((_err, docs) => {
             console.log(docs);
             var temps = 0;
