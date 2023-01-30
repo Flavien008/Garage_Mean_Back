@@ -6,7 +6,7 @@ const {
   getVoiture,
   updateVoiture,
   deleteVoiture,
-} = require("../controllers/Voiture");
+} = require("../controllers/voiture");
 const router = express.Router();
 
 router.route("/voitures").post(auth,ajouterVoiture);
