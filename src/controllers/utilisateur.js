@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 const client = require("../db/connect");
 const jwt = require('jsonwebtoken');
-const { ObjectId } = require("mongodb");
+const { ObjectID } = require("bson");
 
 
 exports.getUser = async (req, res) => {
